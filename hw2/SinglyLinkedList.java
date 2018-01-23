@@ -15,10 +15,10 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     public void addAtIndex(T data, int index) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("The index specified was either"
-                + " negative or larger than the size of the ArrayList.");
+                + " negative or larger than the size of the Linked List.");
         } else if (data == null) {
             throw new IllegalArgumentException("Cannot add null elements to "
-                + "ArrayList");
+                + "Linked List");
         }
         if (index == 0) {
             addToFront(data);
@@ -41,7 +41,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     public void addToFront(T data) {
         if (data == null) {
             throw new IllegalArgumentException("Cannot add null elements to "
-                + "ArrayList");
+                + "Linked List");
         }
         if (size != 0) {
             LinkedListNode<T> node = new LinkedListNode<T>(head.getData(),
@@ -60,7 +60,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     public void addToBack(T data) {
         if (data == null) {
             throw new IllegalArgumentException("Cannot add null elements to "
-                + "ArrayList");
+                + "Linked List");
         }
         if (size != 0) {
             LinkedListNode<T> node = new LinkedListNode<T>(head.getData(),
@@ -81,7 +81,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("The index specified was either"
                 + " negative or larger than or equal to the size of the "
-                + "ArrayList.");
+                + "Linked List.");
         }
         T info;
         if (index == 0) {
@@ -149,7 +149,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     public T removeLastOccurrence(T data) {
         if (data == null) {
             throw new IllegalArgumentException("Cannot add null elements to "
-                + "ArrayList");
+                + "Linked List");
         }
         if (size != 0) {
             T info;
@@ -188,7 +188,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("The index specified was either"
                 + " negative or larger than or equal to the size of the "
-                + "ArrayList.");
+                + "Linked List.");
         }
         LinkedListNode<T> node = new LinkedListNode<>(head.getData(),
             head.getNext());
