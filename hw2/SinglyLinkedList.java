@@ -4,7 +4,7 @@
  * @author Sarah Chen
  * @userid schen475
  * @GTID 903190753
- * @version 1.0
+ * @version 1.2
  */
 public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     // Do not add new instance variables or modify existing ones.
@@ -89,8 +89,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
         } else if (index == size - 1) {
             info = removeFromBack();
         } else {
-            LinkedListNode<T> node = new LinkedListNode<>(head.getData(),
-                head.getNext());
+            LinkedListNode<T> node = head;
             for (int i = 0; i < index - 1; i++) {
                 node = node.getNext();
             }
@@ -131,8 +130,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
                 info = head.getNext().getData();
                 head.setNext(head);
             } else {
-                LinkedListNode<T> node = new LinkedListNode<>(head.getData(),
-                    head.getNext());
+                LinkedListNode<T> node = head;
                 for (int i = 0; i < size - 1; i++) {
                     node = node.getNext();
                 }
@@ -178,9 +176,8 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
                 head = null;
             }
             return info;
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
@@ -190,8 +187,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
                 + " negative or larger than or equal to the size of the "
                 + "Linked List.");
         }
-        LinkedListNode<T> node = new LinkedListNode<>(head.getData(),
-            head.getNext());
+        LinkedListNode<T> node = head;
         for (int i = 0; i < index; i++) {
             node = node.getNext();
         }
@@ -202,8 +198,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     public Object[] toArray() {
         Object[] listArray = new Object[size];
         if (size != 0) {
-            LinkedListNode<T> node = new LinkedListNode<>(head.getData(),
-                head.getNext());
+            LinkedListNode<T> node = head;
             for (int i = 0; i < size; i++) {
                 listArray[i] = node.getData();
                 node = node.getNext();
