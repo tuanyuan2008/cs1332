@@ -106,9 +106,6 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             T info = head.getData();
             if (size == 1) {
                 head = null;
-            } else if (size == 2) {
-                head.setData(head.getNext().getData());
-                head.setNext(head);
             } else {
                 head.setData(head.getNext().getData());
                 head.setNext(head.getNext().getNext());
