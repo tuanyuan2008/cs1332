@@ -40,8 +40,9 @@ public class ArrayQueue<T> implements QueueInterface<T> {
      */
     @Override
     public T dequeue() {
-        if (size == 0 ) {
-            throw new NoSuchElementException("Queue is empty and has no first element.");
+        if (size == 0) {
+            throw new NoSuchElementException("Queue is empty and has no first"
+                    + " element.");
         }
         T elem = backingArray[front];
         backingArray[front] = null;
@@ -66,7 +67,8 @@ public class ArrayQueue<T> implements QueueInterface<T> {
     @Override
     public void enqueue(T data) {
         if (data == null) {
-            throw new IllegalArgumentException("Cannot add null elements to Queue.");
+            throw new IllegalArgumentException("Cannot add null elements to"
+                    + " Queue.");
         }
         if (size == backingArray.length) {
             Object[] tempArray = new Object[backingArray.length * 2];

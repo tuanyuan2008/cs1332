@@ -18,7 +18,8 @@ public class LinkedQueue<T> implements QueueInterface<T> {
     @Override
     public T dequeue() {
         if (size == 0) {
-            throw new NoSuchElementException("Queue is empty and has no first element.");
+            throw new NoSuchElementException("Queue is empty and has no first"
+                    + " element.");
         }
         T item = head.getData();
         if (size == 1) {
@@ -34,7 +35,8 @@ public class LinkedQueue<T> implements QueueInterface<T> {
     @Override
     public void enqueue(T data) {
         if (data == null) {
-            throw new IllegalArgumentException("Cannot add null elements to Queue.");
+            throw new IllegalArgumentException("Cannot add null elements to"
+                    + " Queue.");
         }
         LinkedNode<T> fin = new LinkedNode<T>(data);
         if (size == 0) {
