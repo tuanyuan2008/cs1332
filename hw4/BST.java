@@ -11,7 +11,7 @@ import java.util.Queue;
  * @author Sarah Chen
  * @userid schen475
  * @GTID 903190753
- * @version 1.0
+ * @version 1.1
  */
 public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
     // DO NOT ADD OR MODIFY INSTANCE VARIABLES.
@@ -87,8 +87,6 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
     public T remove(T data) {
         if (data == null) {
             throw new IllegalArgumentException("Cannot remove null data.");
-        } else if (!contains(data)) {
-            throw new NoSuchElementException("Data not found in tree.");
         }
         BSTNode<T> temp = new BSTNode<>(null);
         root = remove(data, root, temp);
@@ -104,6 +102,11 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
      * @param temp the placeholder node storing the data to be removed.
      */
     private BSTNode<T> remove(T data, BSTNode<T> node, BSTNode<T> temp) {
+        if (data == null) {
+            throw new IllegalArgumentException("Cannot remove null data.");
+        } else if (node == null) {
+            throw new NoSuchElementException("Node not found in tree.");
+        }
         if (node.getData().compareTo(data) == 0) {
             temp.setData(node.getData());
             size--;
@@ -114,10 +117,9 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
             } else if (node.getRight() == null) {
                 return node.getLeft();
             } else {
-                BSTNode<T> placehold = new BSTNode<>(node.getData());
+                BSTNode<T> placehold = new BSTNode<>(null);
                 node.setLeft(removePredecessor(node.getLeft(), placehold));
                 node.setData(placehold.getData());
-                return node;
             }
         } else if (data.compareTo(node.getData()) < 0) {
             node.setLeft(remove(data, node.getLeft(), temp));
@@ -139,7 +141,7 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
             temp.setData(node.getData());
             return node.getLeft();
         } else {
-            node = removePredecessor(node.getRight(), temp);
+            node.setRight(removePredecessor(node.getRight(), temp));
             return node;
         }
     }
@@ -148,9 +150,6 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
     public T get(T data) {
         if (data == null) {
             throw new IllegalArgumentException("Cannot get null data.");
-        } else if (!contains(data)) {
-            throw new NoSuchElementException("Tree does not contain "
-                    + "specified data.");
         }
         return getHelper(data, root);
     }
@@ -163,6 +162,10 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
      * @return the data in the tree equal to the parameter.
      */
     private T getHelper(T data, BSTNode<T> node) {
+        if (node == null) {
+            throw new NoSuchElementException("Tree does not contain "
+                    + "specified data.");
+        }
         if (data.compareTo(node.getData()) == 0) {
             return node.getData();
         } else if (data.compareTo(node.getData()) < 0) {
@@ -291,9 +294,6 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
         if (data1 == null || data2 == null) {
             throw new IllegalArgumentException("Cannot find distance between "
                     + "null nodes.");
-        } else if (!contains(data1) || !contains(data2)) {
-            throw new NoSuchElementException("One or more pieces of data "
-                    + "not found in tree.");
         }
         BSTNode<T> ancestor = nearestAncestor(data1, data2, root);
         return distanceBetweenHelper(ancestor, data1)
@@ -309,6 +309,10 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
      * @return the node that represents the nearest ancestor between two nodes.
      */
     private BSTNode<T> nearestAncestor(T data1, T data2, BSTNode<T> node) {
+        if (node == null) {
+            throw new NoSuchElementException("One or more pieces of data "
+                    + "not found in tree.");
+        }
         int val1 = node.getData().compareTo(data1);
         int val2 = node.getData().compareTo(data2);
         if (val1 < 0 && val2 < 0) {
@@ -328,6 +332,10 @@ public class BST<T extends Comparable<? super T>> implements BSTInterface<T> {
      * @return the shortest distance between two nodes in the tree.
      */
     private int distanceBetweenHelper(BSTNode<T> node, T data) {
+        if (node == null) {
+            throw new NoSuchElementException("One or more pieces of data "
+                    + "not found in tree.");
+        }
         if (node.getData().compareTo(data) == 0) {
             return 0;
         } else if (node.getData().compareTo(data) < 0) {
