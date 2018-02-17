@@ -71,7 +71,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
                     + " Queue.");
         }
         if (size == backingArray.length) {
-            Object[] tempArray = new Object[backingArray.length * 2];
+            Object[] tempArray = (T[]) new Object[backingArray.length * 2];
             for (int i = 0; i < backingArray.length; i++) {
                 tempArray[i] = backingArray[(i + front) % backingArray.length];
             }
