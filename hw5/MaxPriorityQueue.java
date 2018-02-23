@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 /**
  * Your implementation of a max priority queue.
  * 
@@ -31,7 +33,7 @@ public class MaxPriorityQueue<T extends Comparable<? super T>>
     @Override
     public T dequeue() {
         if (isEmpty()) {
-            throw new IllegalArgumentException("Cannot dequeue from empty queue.");
+            throw new NoSuchElementException("Cannot dequeue from empty queue.");
         }
         return backingHeap.remove();
     }

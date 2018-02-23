@@ -50,19 +50,16 @@ public class MaxHeap<T extends Comparable<? super T>>
             throw new IllegalArgumentException("Cannot build max heap "
                     + "with null data.");
         }
-        for (T item : data) {
-            if (item == null) {
-                throw new IllegalArgumentException("Cannot build max heap "
-                        + "with null data.");
-            }
-        }
         size = data.size();
         backingArray = (T[]) new Comparable[size * 2 + 1];
         for (int i = 0; i < size; i++) {
+            if (data.get(i) == null) {
+                throw new IllegalArgumentException("Cannot build max heap "
+                        + "with null data.");
+            }
             backingArray[i + 1] = data.get(i);
         }
-        int index = size / 2;
-        for (int i = index; i > 0; i--) {
+        for (int i = size / 2; i > 0; i--) {
             remove(i);
         }
     }
