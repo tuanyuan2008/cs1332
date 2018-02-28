@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Sarah Chen
  * @userid schen475
  * @GTID 903190753
- * @version 1.0
+ * @version 1.2
  */
 public class HashMap<K, V> implements HashMapInterface<K, V> {
 
@@ -48,42 +48,23 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
             throw new IllegalArgumentException("Error,key is null");
         }
         int index = Math.abs(key.hashCode() % table.length);
-        if (table[index] == null) {
-            size++;
-            if ((double) size / table.length > MAX_LOAD_FACTOR) {
-                resizeBackingTable(2 * table.length + 1);
-                index =  Math.abs(key.hashCode() % table.length);
-            }
-            if (table[index] == null) {
-                table[index] = new MapEntry<>(key, value);
-            } else {
-                MapEntry<K, V> temp2 = new MapEntry<>(key, value, table[index]);
-                table[index] = temp2;
-            }
-            return null;
-        } else {
-            MapEntry<K, V> temp = table[index];
-            while (temp != null) {
-                if (temp.getKey().equals(key)) {
-                    V val = temp.getValue();
-                    temp.setValue(value);
-                    return val;
-                }
-                temp = temp.getNext();
-            }
-            size++;
-            if ((double) size / table.length > MAX_LOAD_FACTOR) {
-                resizeBackingTable(2 * table.length + 1);
-                index =  Math.abs(key.hashCode() % table.length);
-            }
-            if (table[index] == null) {
-                table[index] = new MapEntry<>(key, value);
-            } else {
-                MapEntry<K, V> temp2 = new MapEntry<>(key, value, table[index]);
-                table[index] = temp2;
-            }
-            return null;
+        if ((size + 1.0) / table.length > MAX_LOAD_FACTOR) {
+            resizeBackingTable(2 * table.length + 1);
+            index =  Math.abs(key.hashCode() % table.length);
         }
+        MapEntry<K, V> temp = table[index];
+        while (temp != null) {
+            if (temp.getKey().equals(key)) {
+                V val = temp.getValue();
+                temp.setValue(value);
+                return val;
+            }
+            temp = temp.getNext();
+        }
+        size++;
+        MapEntry<K, V> temp2 = new MapEntry<>(key, value, table[index]);
+        table[index] = temp2;
+        return null;
     }
 
     @Override
@@ -177,12 +158,9 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
     public Set<K> keySet() {
         Set<K> keys = new HashSet<>();
         for (MapEntry<K, V> entry: table) {
-            if (entry != null) {
+            while (entry != null) {
                 keys.add(entry.getKey());
-                while (entry.getNext() != null) {
-                    entry = entry.getNext();
-                    keys.add(entry.getKey());
-                }
+                entry = entry.getNext();
             }
         }
         return keys;
@@ -192,12 +170,9 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
     public List<V> values() {
         List<V> valueList = new ArrayList<>();
         for (MapEntry<K, V> entry: table) {
-            if (entry != null) {
+            while (entry != null) {
                 valueList.add(entry.getValue());
-                while (entry.getNext() != null) {
-                    entry = entry.getNext();
-                    valueList.add(entry.getValue());
-                }
+                entry = entry.getNext();
             }
         }
         return valueList;
@@ -214,14 +189,9 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
         for (MapEntry<K, V> entry : table) {
             while (entry != null) {
                 int index = Math.abs(entry.getKey().hashCode() % length);
-                if (tempTable[index] == null) {
-                    tempTable[index] = new MapEntry<>(entry.getKey(),
-                            entry.getValue());
-                } else {
-                    MapEntry<K, V> temp = new MapEntry<>(entry.getKey(),
-                            entry.getValue(), tempTable[index]);
-                    tempTable[index] = temp;
-                }
+                MapEntry<K, V> temp = new MapEntry<>(entry.getKey(),
+                        entry.getValue(), tempTable[index]);
+                tempTable[index] = temp;
                 entry = entry.getNext();
             }
         }
