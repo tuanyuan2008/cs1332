@@ -270,8 +270,10 @@ public class Sorting {
             int leftInd = 0;
             int rightInd = 0;
             int i = 0;
-            while (leftInd < arr.length / 2 && rightInd < arr.length - arr.length / 2) {
-                if (comparator.compare(leftArr[leftInd], rightArr[rightInd]) <= 0) {
+            while (leftInd < arr.length / 2
+                    && rightInd < arr.length - arr.length / 2) {
+                if (comparator.compare(leftArr[leftInd],
+                        rightArr[rightInd]) <= 0) {
                     arr[i] = leftArr[leftInd];
                     leftInd++;
                 } else {
