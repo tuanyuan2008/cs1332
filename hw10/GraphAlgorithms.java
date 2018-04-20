@@ -250,30 +250,27 @@ public class GraphAlgorithms {
 
         Set<Vertex<T>> visited = new HashSet<>();
 
-        PriorityQueue<Edge<T>> pq = new PriorityQueue<>();
         Vertex<T> curr = start;
-        for (Edge<T> t : graph.getAdjList().get(curr)) {
-            if (!visited.contains(curr)) {
-                pq.clear();
-                pq.addAll(graph.getAdjList().get(curr));
-                visited.add(curr);
-                while (!pq.isEmpty()
-                        && mst.size() < 2 * (graph.getVertices().size() - 1)) {
-                    Edge<T> temp = pq.poll();
-                    if (!visited.contains(temp.getV())
-                            || !visited.contains(temp.getU())) {
-                        mst.add(temp);
-                        for (Edge<T> s : graph.getAdjList().get(temp.getV())) {
-                            if (s.getV().equals(temp.getU())) {
-                                mst.add(s);
-                            } else {
-                                pq.add(s);
-                            }
+        if (!visited.contains(curr)) {
+            PriorityQueue<Edge<T>> pq = new PriorityQueue<>();
+            pq.addAll(graph.getAdjList().get(curr));
+            visited.add(curr);
+            while (!pq.isEmpty()
+                    && mst.size() < 2 * (graph.getVertices().size() - 1)) {
+                Edge<T> temp = pq.poll();
+                if (!visited.contains(temp.getV())
+                        || !visited.contains(temp.getU())) {
+                    mst.add(temp);
+                    for (Edge<T> s : graph.getAdjList().get(temp.getV())) {
+                        if (s.getV().equals(temp.getU())) {
+                            mst.add(s);
+                        } else {
+                            pq.add(s);
                         }
                     }
-                    curr = temp.getV();
-                    visited.add(curr);
                 }
+                curr = temp.getV();
+                visited.add(curr);
             }
         }
         if (graph.getVertices().size() == visited.size()) {
